@@ -1,10 +1,27 @@
 const express = require("express");
 const router = express.Router();
-const PageData = require("../models/dhtData.js");
+const DhtData = require("../models/dhtData.js");
+
+// router.get("/", async (req, res) => {
+//   try {
+//     const searchResult = await Post.find(searchOptions);
+//     res.render("index", {
+//       posts: searchResult,
+//       searchOptions: req.query,
+//       path: req.url,
+//     });
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// });
 
 router.get("/", async (req, res) => {
   try {
+    const data = await DhtData.find();
+    console.log(data);
+    res.header("Access-Control-Allow-Origin", "*");
     res.render("index", {
+      data: data,
       path: req.url,
     });
   } catch (err) {
