@@ -1,5 +1,5 @@
 <div class="container">
-  <h1 class="display-3 py-5">Odczyty pogoty</h1>
+  <h1 class="display-3 py-5">Odczyty pogody</h1>
 
   <table class="table">
     <thead>
@@ -14,8 +14,11 @@
     <tbody>
       <% data.forEach(d => { %>
       <tr>
-        <th scope="row"><%= d.readingDate %></th>
-        <td><%= d.temperature %> st. C</td>
+        <th scope="row">
+          <%= d.readingDate.toLocaleString('pl-PL', { timeZoneName: 'short' })
+          %>
+        </th>
+        <td><%= d.temperature %> ℃</td>
         <td><%= d.humidity %>%</td>
         <td><%= d.pressure %> hPa</td>
         <td><%= d.description %></td>
