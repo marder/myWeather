@@ -1,29 +1,31 @@
 <div class="container">
   <h1 class="display-3 py-5">Odczyty pogody</h1>
+  <h1 class="display-5 py-1">Temperatura: <%= last.temperature %> °C</h1>
+  <h1 class="display-5 py-1">Wilgotność: <%= last.humidity %>%</h1>
+  <h1 class="display-5 py-1">Ciśnienie: <%= last.pressure %> hPa</h1>
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Data</th>
-        <th scope="col">Temperatura</th>
-        <th scope="col">Wilgotność</th>
-        <th scope="col">Ciśnienie</th>
-        <th scope="col">Opis</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% data.forEach(d => { %>
-      <tr>
-        <th scope="row">
-          <%= d.readingDate.toLocaleString('pl-PL', { timeZoneName: 'short' })
-          %>
-        </th>
-        <td><%= d.temperature %> ℃</td>
-        <td><%= d.humidity %>%</td>
-        <td><%= d.pressure %> hPa</td>
-        <td><%= d.description %></td>
-      </tr>
-      <% }) %>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table table-hover table-fixed">
+      <thead>
+        <tr>
+          <th scope="col">Data</th>
+          <th scope="col">Temperatura</th>
+          <th scope="col">Wilgotność</th>
+          <th scope="col">Ciśnienie</th>
+          <th scope="col">Opis</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% data.forEach(d => { %>
+        <tr>
+          <th scope="row"><%= d.readingDate.toLocaleString('pl-PL') %></th>
+          <td><%= d.temperature %> °C</td>
+          <td><%= d.humidity %>%</td>
+          <td><%= d.pressure %> hPa</td>
+          <td><%= d.description %></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
 </div>
