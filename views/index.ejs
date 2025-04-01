@@ -1,8 +1,20 @@
 <div class="container">
-  <h1 class="display-3 py-5">Odczyty pogody</h1>
-  <h1 class="display-5 py-1">Temperatura: <%= last.temperature %> °C</h1>
-  <h1 class="display-5 py-1">Wilgotność: <%= last.humidity %>%</h1>
-  <h1 class="display-5 py-1">Ciśnienie: <%= last.pressure %> hPa</h1>
+  <h1 class="display-4 py-5">Odczyty pogody</h1>
+
+  <div class="d-flex flex-row py-4">
+    <div class="px-3 fs-5">
+      Odczyt z <%= last.readingDate.toLocaleTimeString('pl-PL') %>
+    </div>
+    <div class="px-3 fs-5">
+      <i class="fa-solid fa-temperature-half"></i> <%= last.temperature %> °C
+    </div>
+    <div class="px-3 fs-5">
+      <i class="fa-solid fa-droplet"></i> <%= last.humidity %>%
+    </div>
+    <div class="px-3 fs-5">
+      <i class="fa-solid fa-arrows-down-to-line"></i> <%= last.pressure %> hPa
+    </div>
+  </div>
 
   <div class="table-responsive">
     <table class="table table-hover table-fixed">
