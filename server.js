@@ -32,7 +32,11 @@ app.use(expressLayouts);
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
 
 const dataRouter = require("./routes/dhtData");
 app.use("/dhtData", dataRouter);

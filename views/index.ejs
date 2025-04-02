@@ -1,6 +1,12 @@
 <div class="container">
   <h1 class="display-4 py-5">Odczyty pogody</h1>
 
+  <!--
+  <div>
+    <canvas id="myChart"></canvas>
+  </div>
+  -->
+
   <div class="container">
     <div class="row py-3">
       <div class="col-sm fs-2">
@@ -43,3 +49,30 @@
     </table>
   </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx = document.getElementById("myChart");
+
+  new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: ["<%= dateLabel %>"],
+      datasets: [
+        {
+          label: "# of Votes",
+          data: ["<%= temp %>"],
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+</script>
