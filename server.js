@@ -25,7 +25,6 @@ app.set("views", __dirname + "/views");
 app.set("layout", "layouts/layout");
 app.set("view engine", "ejs");
 
-// Apply rate limiter to all requests
 app.use(limiter);
 
 app.use(expressLayouts);
@@ -41,12 +40,11 @@ app.use(
 const dataRouter = require("./routes/dhtData");
 app.use("/dhtData", dataRouter);
 
+const specialDataRouter = require("./routes/dhtSpecialData");
+app.use("/24", specialDataRouter);
+
 const dataPage = require("./routes/dataPage");
 app.use("/", dataPage);
-
-// app.get("/", (req, res) => {
-//   res.json({ message: "Stay awhile and listen" });
-// });
 
 app.listen(port, () =>
   console.log("Server listening on PORT", port, `\nhttp://localhost:${port}/`)
