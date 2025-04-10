@@ -37,10 +37,10 @@ app.use(
   })
 );
 
-const dataRouter = require("./routes/dhtData");
-app.use("/dhtData", dataRouter);
+const dataRouter = require("./routes/data");
+app.use("/data", dataRouter);
 
-const specialDataRouter = require("./routes/dhtSpecialData");
+const specialDataRouter = require("./routes/specialData");
 app.use("/24", specialDataRouter);
 
 const dataPage = require("./routes/dataPage");

@@ -18,8 +18,8 @@ router.get("/", async (req, res) => {
       
       const data = await DhtData.find().limit(24).sort({ readingDate: -1 });
       
-      lastData.labels = data.map((item) => item.readingDate);
-      lastData.temperature = data.map((item) => item.temperature);
+      lastData.labels = data.map((item) => (item.readingDate).toLocaleTimeString("pl-PL")).reverse();
+      lastData.temperature = data.map((item) => item.temperature).reverse();
       
       //console.log(lastData);
       
