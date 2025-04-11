@@ -10,7 +10,9 @@ router.get("/", async (req, res) => {
 
   lastData = {
     "labels": [],
-    "temperature": []
+    "temperature": [],
+    "humidity": [],
+    "pressure": [],
   }
 
   if (getKey === apiKey) {
@@ -20,9 +22,9 @@ router.get("/", async (req, res) => {
       
       lastData.labels = data.map((item) => (item.readingDate).toLocaleTimeString("pl-PL")).reverse();
       lastData.temperature = data.map((item) => item.temperature).reverse();
-      
-      //console.log(lastData);
-      
+      lastData.humidity = data.map((item) => item.humidity).reverse();
+      lastData.pressure = data.map((item) => item.pressure).reverse();
+            
       res.header("Access-Control-Allow-Origin", "*");
       res.json(lastData);
 
