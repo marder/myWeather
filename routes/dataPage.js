@@ -19,14 +19,14 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/apidesc", async (req, res) => {
-  try {
-    res.render("api", {
-      path: req.url,
-    });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
+// router.get("/desc", async (req, res) => {
+//   try {
+//     res.render("api", {
+//       path: req.url,
+//     });
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// });
 
 module.exports = router;
