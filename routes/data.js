@@ -3,6 +3,7 @@ const router = express.Router();
 const DhtData = require("../models/dhtData");
 
 const apiKey = process.env.API_KEY;
+const apiKeyPost = process.env.API_KEY_POST;
 
 //getting all
 router.get("/", async (req, res) => {
@@ -35,8 +36,8 @@ router.get("/:id", getDhtData, (req, res) => {
 
 //creating one
 router.post("/", async (req, res) => {
-  const getKey = req.query.api_key;
-  if (getKey === apiKey) {
+  const postKey = req.query.api_key;
+  if (postKey === apiKeyPost) {
     const data = new DhtData({
       description: req.body.description,
       temperature: req.body.temperature,
