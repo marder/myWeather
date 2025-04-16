@@ -5,21 +5,26 @@ const DhtData = require("../models/dhtData");
 const apiKey = process.env.API_KEY;
 const apiKeyPost = process.env.API_KEY_POST;
 
-//getting all
-router.get("/", async (req, res) => {
-  const getKey = req.query.api_key;
-  if (getKey === apiKey) {
-    try {
-      const data = await DhtData.find();
-      //console.log(data);
-      res.header("Access-Control-Allow-Origin", "*");
-      res.json(data);
-    } catch (err) {
-      res.status(500).json({ message: err.message });
-    }
-  } else {
-    res.json({ message: "The provided API key is invalid" });
-  }
+// //getting all
+// router.get("/", async (req, res) => {
+//   const getKey = req.query.api_key;
+//   if (getKey === apiKey) {
+//     try {
+//       const data = await DhtData.find();
+//       //console.log(data);
+//       res.header("Access-Control-Allow-Origin", "*");
+//       res.json(data);
+//     } catch (err) {
+//       res.status(500).json({ message: err.message });
+//     }
+//   } else {
+//     res.json({ message: "The provided API key is invalid" });
+//   }
+// });
+
+//getting pages
+router.get("/pages", paginatedResults(DhtData), (req, res) => {
+  res.json(res.paginatedResults);
 });
 
 //getting one
@@ -69,6 +74,52 @@ async function getDhtData(req, res, next) {
   }
   res.data = data;
   next();
+}
+
+function paginatedResults(model) {
+  return async (req, res, next) => {
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
+
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+
+    const results = {};
+
+    if (endIndex < (await model.find().countDocuments().exec())) {
+      results.next = {
+        page: page + 1,
+        limit: limit,
+      };
+    }
+
+    if (startIndex > 0) {
+      results.previous = {
+        page: page - 1,
+        limit: limit,
+      };
+    }
+
+    if (!limit) {
+      results.totalPages = 1;
+    } else {
+      results.totalPages = Math.ceil(
+        (await DhtData.find().countDocuments().exec()) / limit
+      );
+    }
+    try {
+      results.results = await model
+        .find()
+        .limit(limit)
+        .skip(startIndex)
+        .exec();
+
+      res.paginatedResults = results;
+      next();
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  };
 }
 
 module.exports = router;
