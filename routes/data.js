@@ -1,34 +1,29 @@
 const express = require("express");
 const router = express.Router();
-const DhtData = require("../models/dhtData");
+const Data = require("../models/Data");
 
 const apiKey = process.env.API_KEY;
 const apiKeyPost = process.env.API_KEY_POST;
 
-// //getting all
-// router.get("/", async (req, res) => {
-//   const getKey = req.query.api_key;
-//   if (getKey === apiKey) {
-//     try {
-//       const data = await DhtData.find();
-//       //console.log(data);
-//       res.header("Access-Control-Allow-Origin", "*");
-//       res.json(data);
-//     } catch (err) {
-//       res.status(500).json({ message: err.message });
-//     }
-//   } else {
-//     res.json({ message: "The provided API key is invalid" });
-//   }
-// });
+//getting all
+router.get("/", async (req, res) => {
+    try {
+      const data = await Data.find();
+      //console.log(data);
+      res.header("Access-Control-Allow-Origin", "*");
+      res.json(data);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+});
 
 //getting pages
-router.get("/pages", paginatedResults(DhtData), (req, res) => {
+router.get("/pages", paginatedResults(Data), (req, res) => {
   res.json(res.paginatedResults);
 });
 
 //getting one
-router.get("/:id", getDhtData, (req, res) => {
+router.get("/:id", getData, (req, res) => {
   const getKey = req.query.api_key;
   if (getKey === apiKey) {
     console.log(req.protocol + "://" + req.headers.host + req.originalUrl);
@@ -43,17 +38,17 @@ router.get("/:id", getDhtData, (req, res) => {
 router.post("/", async (req, res) => {
   const postKey = req.query.api_key;
   if (postKey === apiKeyPost) {
-    const data = new DhtData({
+    const data = new Data({
       description: req.body.description,
       temperature: req.body.temperature,
       humidity: req.body.humidity,
       pressure: req.body.pressure
     });
     try {
-      const newDhtData = await data.save();
-      res.status(201).json(newDhtData);
+      const newData = await data.save();
+      res.status(201).json(newData);
       console.log(req.baseUrl);
-      console.log(newDhtData);
+      console.log(newData);
     } catch (err) {
       res.status(400).json({ message: err.message });
     }
@@ -62,10 +57,10 @@ router.post("/", async (req, res) => {
   }
 });
 
-async function getDhtData(req, res, next) {
+async function getData(req, res, next) {
   let data;
   try {
-    data = await DhtData.findById(req.params.id);
+    data = await Data.findById(req.params.id);
     if (data == null) {
       return res.status(404).json({ message: "Record not found!" });
     }
@@ -104,7 +99,7 @@ function paginatedResults(model) {
       results.totalPages = 1;
     } else {
       results.totalPages = Math.ceil(
-        (await DhtData.find().countDocuments().exec()) / limit
+        (await Data.find().countDocuments().exec()) / limit
       );
     }
     try {

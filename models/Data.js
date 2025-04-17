@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const dhtDataSchema = new mongoose.Schema({
+const DataSchema = new mongoose.Schema({
   description: {
     type: String,
     required: true,
@@ -24,4 +24,4 @@ const dhtDataSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("dhtData", dhtDataSchema);
+module.exports = mongoose.model("dhtData", DataSchema);

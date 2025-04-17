@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const DhtData = require("../models/dhtData");
+const Data = require("../models/Data");
 
 const apiKey = process.env.API_KEY;
 
@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
   if (getKey === apiKey) {
     try {
       
-      const data = await DhtData.find().limit(24).sort({ readingDate: -1 });
+      const data = await Data.find().limit(24).sort({ readingDate: -1 });
       
       lastData.labels = data.map((item) => (item.readingDate).toLocaleTimeString("pl-PL")).reverse();
       lastData.temperature = data.map((item) => item.temperature).reverse();
