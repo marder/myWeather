@@ -24,14 +24,9 @@ router.get("/pages", paginatedResults(Data), (req, res) => {
 
 //getting one
 router.get("/:id", getData, (req, res) => {
-  const getKey = req.query.api_key;
-  if (getKey === apiKey) {
     console.log(req.protocol + "://" + req.headers.host + req.originalUrl);
     res.header("Access-Control-Allow-Origin", "*");
     res.send(res.data);
-  } else {
-    res.json({ message: "The provided api key is invalid" });
-  }
 });
 
 //creating one
