@@ -24,4 +24,4 @@ const DataSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("dhtData", DataSchema);
+module.exports = mongoose.model("data", DataSchema);
