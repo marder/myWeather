@@ -15,7 +15,6 @@ router.get("/", async (req, res) => {
     "pressure": [],
   }
 
-  if (getKey === apiKey) {
     try {
       
       const data = await Data.find().limit(24).sort({ readingDate: -1 });
@@ -32,9 +31,6 @@ router.get("/", async (req, res) => {
       
       res.status(500).json({ message: err.message });
     }
-  } else {
-    res.json({ message: "The provided API key is invalid" });
-  }
 });
 
 module.exports = router;
