@@ -37,6 +37,8 @@ app.use(
   })
 );
 
+app.use(cors());
+
 const dataRouter = require("./routes/data");
 app.use("/data", dataRouter);
 
